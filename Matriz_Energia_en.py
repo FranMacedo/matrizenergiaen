@@ -175,12 +175,12 @@ def create_anual(df):
     df_anual = df_anual.round(0)
     return df_anual
 
-forma_df_fi = pd.read_excel('data/en/forma_fi.xlsx')
-sector_df_fi = pd.read_excel('data/en/sector_fi.xlsx')
-forma_df_pr = pd.read_excel('data/en/forma_pr.xlsx')
-sector_df_pr = pd.read_excel('data/en/sector_pr.xlsx')
-forma_df_em = pd.read_excel('data/en/forma_em.xlsx')
-sector_df_em = pd.read_excel('data/en/sector_em.xlsx')
+forma_df_fi = pd.read_excel('data/forma_fi.xlsx')
+sector_df_fi = pd.read_excel('data/sector_fi.xlsx')
+forma_df_pr = pd.read_excel('data/forma_pr.xlsx')
+sector_df_pr = pd.read_excel('data/sector_pr.xlsx')
+forma_df_em = pd.read_excel('data/forma_em.xlsx')
+sector_df_em = pd.read_excel('data/sector_em.xlsx')
 populacao = pd.Series(
     [563312, 550466, 549210, 542917, 530847, 520549, 513064, 506892, 504718, 505526, 506654],
     index=[2001, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018],
@@ -1232,7 +1232,7 @@ def regista_pessoas(nd, letra, num):
 @server.route("/download/<path:path>")
 def download(path):
     """Serve a file from the upload directory."""
-    return send_from_directory("data/en", path, as_attachment=True)
+    return send_from_directory("data", path, as_attachment=True)
 
 # hidd_year_bt
 # 2008-hide
