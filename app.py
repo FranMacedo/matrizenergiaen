@@ -26,26 +26,29 @@ mw_k = "k MWh"
 mw_M = "Millions MWh"
 
 
-color_7_live = ["#8DD3C7", "#fff069", "#BEBADA", "#FB8072", "#80B1D3", "#FDB462", "#B3DE69"]
-color_7_dead = ["#d3ede9", "#FFF9C4", "#e3e1ed", "#f5d4d0", "#cee1ed", "#fae0c3", "#e7f2d3"]
+# color_6_live = ["#8DDç3C7", "#fff069", "#BEBADA", "#FB8072", "#80B1D3", "#FDB462", "#B3DE69"]
+# color_6_dead = ["#d3ede9", "#FFF9C4", "#e3e1ed", "#f5d4d0", "#cee1ed", "#fae0c3", "#e7f2d3"]
+
+color_6_live = ["#8DD3C7", "#fff069", "#BEBADA", "#FB8072", "#80B1D3", "#FDB462"]
+color_6_dead = ["#96ebde", "#f7efa6", "#c1bae8", "#f0ada5", "#a7d0eb", "#f0c595"]
 
 
-color_5_live = ["#8DD3C7", "#fff069", "#BEBADA", "#FB8072", "#80B1D3"]
-color_5_dead = ["#d3ede9", "#FFF9C4", "#e3e1ed", "#f5d4d0", "#cee1ed"]
+color_5_live = color_6_live[:5]
+color_5_dead = color_6_dead[:5]
 
-color_7_live_d = {"Diesel": color_7_live[0],
-                  "Electricity": color_7_live[1],
-                  "Natural Gas": color_7_live[2],
-                  "Gasoline": color_7_live[3],
-                  "LPG": color_7_live[4],
-                  "Other": color_7_live[5]}
+color_6_live_d = {"Diesel": color_6_live[0],
+                    "Electricity": color_6_live[1],
+                    "Natural Gas": color_6_live[2],
+                    "Gasoline": color_6_live[3],
+                    "LPG": color_6_live[4],
+                    "Other": color_6_live[5]}
 
-color_7_dead_d = {"Diesel": color_7_dead[0],
-                    "Electricity": color_7_dead[1],
-                    "Natural Gas": color_7_dead[2],
-                    "Gasoline": color_7_dead[3],
-                    "LPG": color_7_dead[4],
-                    "Other": color_7_dead[5]}
+color_6_dead_d = {"Diesel": color_6_dead[0],
+                    "Electricity":color_6_dead[1],
+                    "Natural Gas": color_6_dead[2],
+                    "Gasoline": color_6_dead[3],
+                    "LPG": color_6_dead[4],
+                    "Other": color_6_dead[5]}
 
 color_5_live_d = {"Agriculture": color_5_live[0],
                   "Domestic": color_5_live[1],
@@ -116,15 +119,15 @@ unidades_energia = 'toe'
 #     forma_df['color_fill'] = forma_df['Sector'].apply(lambda x: color_5_dead_d[x])
 #     forma_df['color_line'] = forma_df['Sector'].apply(lambda x: color_5_live_d[x])
 #
-#     sector_df['color_fill'] = sector_df['Forma'].apply(lambda x: color_7_dead_d[x])
-#     sector_df['color_line'] = sector_df['Forma'].apply(lambda x: color_7_live_d[x])
+#     sector_df['color_fill'] = sector_df['Forma'].apply(lambda x: color_6_dead_d[x])
+#     sector_df['color_line'] = sector_df['Forma'].apply(lambda x: color_6_live_d[x])
 #
 #
 #     # forma_df['color_dead'] = color_5_dead * len(anos)
 #     # forma_df['color_live'] = color_5_live * len(anos)
 #     #
-#     # sector_df['color_dead'] = color_7_dead * len(anos)
-#     # sector_df['color_live'] = color_7_live * len(anos)
+#     # sector_df['color_dead'] = color_6_dead * len(anos)
+#     # sector_df['color_live'] = color_6_live * len(anos)
 #
 #     return forma_df, sector_df, forma_anual, sector_anual, forma_list, sector_list, anos
 
@@ -153,8 +156,8 @@ def cria_cores(cores_5_7, select):
         selec_list = sector_list
 
     else:
-        color_dead = color_7_dead
-        color_live = color_7_live
+        color_dead = color_6_dead
+        color_live = color_6_live
         selec_list = forma_list
 
     colors = color_dead.copy()
@@ -169,22 +172,41 @@ def cria_cores(cores_5_7, select):
 # energia_primaria_path = "data/energia_primaria.xlsx"
 # emissoes_path = "data/emissoes_CO2.xlsx"
 
+
+def set_colors(df, pallete):
+    return pallete * int(len(df) / len(pallete))
+
+
 def create_anual(df):
     df_anual = df.groupby(['Year']).sum()
     df_anual['Total'] = df_anual.sum(axis=1)
     df_anual = df_anual.round(0)
     return df_anual
 
-forma_df_fi = pd.read_excel('data/forma_fi.xlsx')
-sector_df_fi = pd.read_excel('data/sector_fi.xlsx')
-forma_df_pr = pd.read_excel('data/forma_pr.xlsx')
-sector_df_pr = pd.read_excel('data/sector_pr.xlsx')
-forma_df_em = pd.read_excel('data/forma_em.xlsx')
-sector_df_em = pd.read_excel('data/sector_em.xlsx')
+forma_df_fi = pd.read_excel('data/en/forma_fi_en.xlsx')
+sector_df_fi = pd.read_excel('data/en/sector_fi_en.xlsx')
+forma_df_pr = pd.read_excel('data/en/forma_pr_en.xlsx')
+sector_df_pr = pd.read_excel('data/en/sector_pr_en.xlsx')
+forma_df_em = pd.read_excel('data/en/forma_em_en.xlsx')
+sector_df_em = pd.read_excel('data/en/sector_em_en.xlsx')
 populacao = pd.Series(
     [563312, 550466, 549210, 542917, 530847, 520549, 513064, 506892, 504718, 505526, 506654],
     index=[2001, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018],
 )
+
+
+forma_df_fi['color_fill'] = set_colors(forma_df_fi, color_5_dead)
+forma_df_fi['color_line'] = set_colors(forma_df_fi, color_5_live)
+sector_df_fi['color_fill'] = set_colors(sector_df_fi, color_6_dead)
+sector_df_fi['color_line'] = set_colors(sector_df_fi, color_6_live)
+forma_df_pr['color_fill'] = set_colors(forma_df_pr, color_5_dead)
+forma_df_pr['color_line'] = set_colors(forma_df_pr, color_5_live)
+sector_df_pr['color_fill'] = set_colors(sector_df_pr, color_6_dead)
+sector_df_pr['color_line'] = set_colors(sector_df_pr, color_6_live)
+forma_df_em['color_fill'] = set_colors(forma_df_em, color_5_dead)
+forma_df_em['color_line'] = set_colors(forma_df_em, color_5_live)
+sector_df_em['color_fill'] = set_colors(sector_df_em, color_6_dead)
+sector_df_em['color_line'] = set_colors(sector_df_em, color_6_live)
 
 forma_anual_fi = create_anual(forma_df_fi)
 sector_anual_fi = create_anual(sector_df_fi).iloc[:, :-1]
@@ -205,17 +227,19 @@ total_m_fi = ['{:,}'.format(int(tr)).replace(',', ' ') for tr in total_m_fi]
 total_m_fi = list(map(str, total_m_fi))
 # total_m_fi = [a + ' GWh' for a in total_m_fi]
 
-total_m_pr = list(round(forma_anual_pr['Total'] / 1000000, 1))
+total_m_pr = list(round(forma_anual_pr['Total'] / 1000, 1))
+total_m_pr = ['{:,}'.format(int(tr)).replace(',', ' ') for tr in total_m_pr]
 total_m_pr = list(map(str, total_m_pr))
-total_m_pr = [a + 'M' for a in total_m_pr]
+# total_m_pr = [a + 'M' for a in total_m_pr]
 
-total_m_em = list(round(forma_anual_em['Total'] / 1000 / 1000000, 1))
+total_m_em = list(round(forma_anual_em['Total'] / 1000, 1))
+total_m_em = ['{:,}'.format(int(tr)).replace(',', ' ') for tr in total_m_em]
 total_m_em = list(map(str, total_m_em))
-total_m_em = [a + ' kM' for a in total_m_em]
+# total_m_em = [a + ' M' for a in total_m_em]
 
 def get_ano_bar_plot():
     forma_anual = forma_anual_fi
-    color_fill = ['#9BD7F1', ] * len(forma_anual.index)
+    color_fill = ['#85ceed', ] * len(forma_anual.index)
     color_fill[-1] = '#029CDE'
     color_line = ['#029CDE', ] * len(forma_anual.index)
     total_m = total_m_fi
@@ -251,11 +275,11 @@ server = app.server
 app.css.config.serve_locally = True
 app.scripts.config.serve_locally = True
 
-app.server.config['SECRET_KEY'] = '60b69ea75d65bfc586c4e778a9357219'
-app.server.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
-# HEROKU
 # app.server.config['SECRET_KEY'] = '60b69ea75d65bfc586c4e778a9357219'
-# app.server.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://jedcrkiqvpgghw:a55d8ab5271e0b58a11aa3f350384741181a593f53d5c4da6ccbd4fd2db74737@ec2-54-246-100-246.eu-west-1.compute.amazonaws.com:5432/da5crrdk573292'
+# app.server.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+# HEROKU
+app.server.config['SECRET_KEY'] = '60b69ea75d65bfc586c4e778a9357219'
+app.server.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://jedcrkiqvpgghw:a55d8ab5271e0b58a11aa3f350384741181a593f53d5c4da6ccbd4fd2db74737@ec2-54-246-100-246.eu-west-1.compute.amazonaws.com:5432/da5crrdk573292'
 
 app.server.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
@@ -271,20 +295,25 @@ class Pessoas(db.Model):
     def __repr__(self):
         return f"pessoas('{self.primaria}', '{self.final}', '{self.emissoes}')"
 
+size_generico = 15
+# family_generico = "'Abel', sans-serif"
+family_generico = "'Questrial', sans-serif"
 
 
 layout = dict(
     font=dict(
-        # size=13,
-        family="'Abel', sans-serif",
+        size=size_generico,
+        family=family_generico,
     ),
     hovermode="closest",
     plot_bgcolor="#F9F9F9",
     paper_bgcolor="#F9F9F9",
-
+    hoverlabel=dict(font=dict(size=size_generico, family=family_generico))
 )
+
+
 layout_ano_bar = copy.deepcopy(layout)
-layout_ano_bar['margin'] = dict(l=0, r=0, b=0, t=0)
+layout_ano_bar['margin'] = dict(l=0, r=4, b=0, t=0)
 layout_ano_bar['height'] = 200
 layout_ano_bar['dragmode'] = 'select'
 layout_ano_bar['xaxis'] = dict(fixedrange=True)
@@ -556,7 +585,6 @@ def create_year_button(ano):
     return butao
 
 
-
 info_button_year = html.Div(
     [
         html.I(className="fas fa-question-circle fa-sm", id="target_year"),
@@ -566,29 +594,20 @@ info_button_year = html.Div(
     className="p-1 text-muted"
 )
 
-pop_radio = dcc.RadioItems(
-    options=[
-        {"label": "Total", "value": 1},
-        {"label": "Per Capita", "value": 2},
-    ],
-    value=1,
-    labelStyle={'display': 'inline-block', 'margin-left': '2%', 'textAlign':'left'},
-    id="radio-pop",
-)
+
 # slider + grafico de barras
 year_selector = html.Div([
 # "<br>(Seleccione o ano pretendido)"
     dbc.Row([html.H5(id='header-ano-bar', style={'textAlign': 'center'}), info_button_year], align='center', justify='center',style={'textAlign': 'center', "margin": "0% 2% 0% 2%"}),
-    html.Div([pop_radio],  style={'textAlign': 'center', "padding": "0% 0% 1% 0%"}),
     html.P(dcc.Markdown('''**Select year:**'''), style={'textAlign': 'center', "padding": "0% 0% 1% 0%", 'font-style': 'italic'}),
 
     html.Div(
-        [html.Div(create_year_button(2008), id='2008-hide'), create_year_button(2009), create_year_button(2010),
+        [html.Div(create_year_button(2008), style={'display': 'inline'}), create_year_button(2009), create_year_button(2010),
          create_year_button(2011), create_year_button(2012), create_year_button(2013),
          create_year_button(2014), create_year_button(2015), create_year_button(2016),
          dbc.Button(2017, color='primary', outline=False, id='sel_2017', className='bt-anos')
 ],
-        # style={'textAlign': "center", "margin-left": "1rem", "margin-right": "1rem", "padding": "1rem 1rem"}
+        style={"margin-right": "0.5rem"}
     ),
     html.Div(children=json.dumps(str(2017)), id='mem-year', style={'display':'none'}),
     dcc.Loading(id="loading-ano-bar", type="circle",
@@ -683,7 +702,7 @@ sidebar = html.Div(
         html.Hr(),
         html.Div([year_selector], style={"padding": "0% 0% 0% 0%"}),
         html.Hr(),
-        dbc.Row(html.H5('DOWNLOAD:', style={'font-weight': 'bold', "textAlign": "center"}), align='center', justify='center'),
+        dbc.Row(html.H5('DOWNLOADS:', style={'font-weight': 'bold', "textAlign": "center"}), align='center', justify='center'),
         # html.Hr(),
         html.Div(dbc.Row([html.P('CO2 Emissions:', style={'textAlign': 'center'}), download_button_em], align='center', justify='center'), id="down-em-container", style={'display': 'none'}),
         html.Div(
@@ -780,6 +799,7 @@ single_bar_container = html.Div([
                                     dcc.Dropdown(
                                         id='dropdown-single',
                                         clearable=False,
+
                                             ), lg=4
                                 ),
                                 dbc.Col(html.Div(id='value-dd-text'), lg=3,
@@ -1234,19 +1254,18 @@ def download(path):
     """Serve a file from the upload directory."""
     return send_from_directory("data", path, as_attachment=True)
 
-# hidd_year_bt
-# 2008-hide
-@app.callback(
-    [Output(f"sel_{a}", "style") for a in anos] + [Output("2008-hide", "style")],
-    [Input("radio-pop", "value")]
-)
-def update_hide_2008(per_capita):
-    if not ctx:
-        raise PreventUpdate
-    if per_capita == 2:
-        return [{'width': '11.1111111111111111111%'}]*len(anos) + [{'display': 'none'}]
-    else:
-        return [{}]*len(anos) + [{'display': 'inline'}]
+#
+# @app.callback(
+#     [Output(f"sel_{a}", "style") for a in anos] + [Output("2008-hide", "style")],
+#     [Input("radio-pop", "value")]
+# )
+# def update_hide_2008(per_capita):
+#     if not ctx:
+#         raise PreventUpdate
+#     if per_capita == 2:
+#         return [{'width': '11.1111111111111111111%'}]*len(anos) + [{'display': 'none'}]
+#     else:
+#         return [{}]*len(anos) + [{'display': 'inline'}]
 
 
 @app.callback(
@@ -1286,34 +1305,23 @@ Output('tt-year-bar', 'children'),
                Output('header-forma-sector', 'children')],
               [Input('tabs', 'active_tab'),
                Input('dd-primaria-final', 'value'),
-               Input('radio-pop', 'value'),
 
                ]
               )
-def headers_emissoes(at, prim_fin, per_capita):
+def headers_emissoes(at, prim_fin):
     if not dash.callback_context.triggered:
         raise PreventUpdate
     if at == "tab-emissoes":
-        if per_capita == 2:
-            head_a_b = 'CO2 Emissions per year (ton per capita)'
-        else:
-            head_a_b = 'CO2 Emissions per year (ton)'
-        return dcc.Markdown('''**ton** stands for tonnes of CO2 emissions.'''), head_a_b, 'CO2 Emissions per:'
+        return dcc.Markdown('''**k ton** stands for 1 000 tonnes of CO2 emissions.'''), 'CO2 Emissions per year (k ton)', 'CO2 Emissions per:'
 
     else:
         if prim_fin == 'Primary':
-            if per_capita == 2:
-                head_a_b = 'Primary Energy consumption per year (toe per capita)'
-            else:
-                head_a_b = 'Primary Energy consumption per year (toe)'
-            return dcc.Markdown('''**toe** stands for tonnes of oil equivalent.'''), head_a_b, 'Select disaggregation:'
+            head_a_b = 'Primary Energy consumption per year (k toe)'
+            return dcc.Markdown('''**k toe** stands for 1 000 tonnes of oil equivalent.'''), head_a_b, 'Select disaggregation:'
         else:
-            if per_capita == 2:
-                head_a_b = 'Final Energy consumption per year (MWh per capita)'
-                text_tool = dcc.Markdown('''**MWh** stands for Megawatt hour, i.e. 1000 Wh.''')
-            else:
-                head_a_b = 'Final Energy consumption per year (GWh)'
-                text_tool = dcc.Markdown('''**GWh** stands for Gigawatt hour, i.e. 1000 MWh.''')
+
+            head_a_b = 'Final Energy consumption per year (GWh)'
+            text_tool = dcc.Markdown('''**GWh** (Gigawatt hour) stands for 1 000 MWh or 1 000 000 kWh.''')
 
             return text_tool, head_a_b, 'Select disaggregation:'
 
@@ -1352,13 +1360,12 @@ def headers_emissoes(at, prim_fin, per_capita):
      Input('dd-primaria-final', 'value'),
      Input('tabs', 'active_tab'),
      Input("mem-year", "children"),
-     Input("radio-pop", "value"),
 
 
 
     ]
 )
-def update_ano_bar(prim_fin, at, ano_mem, per_capita):
+def update_ano_bar(prim_fin, at, ano_mem):
     if not ctx.triggered:
         raise PreventUpdate
 
@@ -1371,25 +1378,12 @@ def update_ano_bar(prim_fin, at, ano_mem, per_capita):
         visi_em = {'display': 'inline'}
         visi_pf = {'display': 'none'}
 
-        if per_capita == 2:
-            forma_anual = copy.deepcopy(forma_anual_em.loc[2009:])
-            forma_anual['Total'] = copy.deepcopy(forma_anual['Total']) / populacao.loc[2009:2017]
-            # forma_anual['Total'] = forma_anual['Total'].round(0)
-            # forma_anual['Total'] = list(map(int, forma_anual['Total']))
-            total_m = [str(format(round(v, 2), '.0f')) for v in forma_anual['Total']]
+        forma_anual = forma_anual_em
+        total_m = total_m_em
+        # unidade = unidades_emissoes
+        unidade = ' ton'
 
-            unidade = ' ton per capita'
 
-            my_text = ['Total: ' + '{:.0f}'.format(tr) + unidade + '<br>Year: ' + '{}'.format(an)
-                       for tr, an in zip(list(forma_anual['Total']), anos)]
-        else:
-            forma_anual = forma_anual_em/1000000
-
-            total_m = total_m_em
-            # unidade = unidades_emissoes
-            unidade = ton_M
-            my_text = ['Total: ' + '{:,}'.format(int(tr)).replace(',', ' ') + unidade +
-                       '<br>Year: ' + '{}'.format(an) for tr, an in zip(list(forma_anual['Total']), anos)]
 
     else:
         visi_em = {'display': 'none'}
@@ -1397,48 +1391,30 @@ def update_ano_bar(prim_fin, at, ano_mem, per_capita):
 
         if prim_fin == 'Primary':
 
-            if per_capita == 2:
-                unidade = ' toe per capita'
-                forma_anual = copy.deepcopy(forma_anual_pr.loc[2009:])
-                forma_anual['Total'] = copy.deepcopy(forma_anual['Total']) / populacao.loc[2009:2017]
-                total_m = [str(format(round(v,2), '.2f')) for v in forma_anual['Total']]
-                my_text = ['Total: ' + '{:.3f}'.format(tr) + unidade + '<br>Year: ' + '{}'.format(an)
-                           for tr, an in zip(list(forma_anual['Total']), anos)]
-            else:
-                unidade = tep_k
-                forma_anual =forma_anual_pr/1000
-                total_m = total_m_pr
-                my_text = ['Total: ' + '{:,}'.format(int(tr)).replace(',', ' ') + unidade +
-                           '<br>Year: ' + '{}'.format(an) for tr, an in zip(list(forma_anual['Total']), anos)]
+
+            unidade = ' toe'
+            forma_anual =forma_anual_pr
+            total_m = total_m_pr
+
 
         else:
-            if per_capita == 2:
-                forma_anual = copy.deepcopy(forma_anual_fi.loc[2009:])
-                forma_anual['Total'] = copy.deepcopy(forma_anual['Total']) / populacao.loc[2009:2017]
-                unidade = ' MWh per capita'
-                total_m = [str(format(round(v,2), '.2f')) for v in forma_anual['Total']]
-                my_text = ['Total: ' + '{:.3f}'.format(tr) + unidade + '<br>Year: ' + '{}'.format(an)
-                           for tr, an in zip(list(forma_anual['Total']), anos)]
 
-            else:
-                unidade = ' MWh'
+            unidade = ' MWh'
 
-                forma_anual = forma_anual_fi
-                total_m = total_m_fi
-                my_text = [
-                    'Total: ' + '{:,}'.format(int(tr)).replace(',', ' ') + unidade + '<br>Year: ' + '{}'.format(an)
-                    for tr, an in zip(list(forma_anual['Total']), anos)]
+            forma_anual = forma_anual_fi
+            total_m = total_m_fi
 
     try:
         ano_posi = list(forma_anual.index).index(ano)
     except ValueError:
         ano_posi = list(forma_anual.index).index(2009)
-    color_fill = ['#9BD7F1', ] * len(forma_anual.index)
+    color_fill = ['#85ceed', ] * len(forma_anual.index)
     color_fill[ano_posi] = '#029CDE'
     color_line = ['#029CDE', ]*len(forma_anual.index)
 
 
-
+    my_text = ['Total: ' + '{:,}'.format(int(tr)).replace(',', ' ') + unidade + '<br>Year: ' + '{}'.format(an)
+               for tr, an in zip(list(forma_anual['Total']), anos)]
 
     fig = go.Figure(data=[go.Bar(
         x=forma_anual.index,
@@ -1538,10 +1514,10 @@ def update_donut(ano_mem, form_sect, selecao, at, dd_select, prim_fin):
         raise PreventUpdate
 
     if at == "tab-emissoes":
-        forma_anual = forma_anual_em / 1000
-        sector_anual = sector_anual_em / 1000
-        unidade_1 = ton_M
-        unidade_2 = ton_k
+        forma_anual = forma_anual_em
+        sector_anual = sector_anual_em
+        unidade_1 = ton_k
+        unidade_2 = ' ton'
 
     else:
         unidade_2 = unidades_energia
@@ -1592,8 +1568,8 @@ def update_donut(ano_mem, form_sect, selecao, at, dd_select, prim_fin):
         s_f_lista = forma_list
 
         df = forma_anual.iloc[:, :-1]
-        color_live = color_7_live_d
-        color_dead = color_7_dead_d
+        color_live = color_6_live_d
+        color_dead = color_6_dead_d
 
         if dd_select:
 
@@ -1710,7 +1686,7 @@ def update_dropdown_items(form_sect, selecao):
             {'label': 'Electricity', 'value': 'Electricity'},
             {'label': 'Diesel', 'value': 'Diesel'},
             {'label': 'Natural Gas', 'value': 'Natural Gas'},
-            {'label': 'Gasoline', 'value': 'Gasoline'},
+            {'label': 'Gasoline', 'value': 'GasolineLPG'},
             {'label': 'LPG', 'value': 'LPG'},
             {'label': 'Other', 'value': 'Other'}
         ]
@@ -1750,8 +1726,8 @@ def update_bar_single(ano_mem, form_sect, selecao, prim_fin, at, dd_select):
     if at == "tab-emissoes":
         sector_df = sector_df_em
         forma_df = forma_df_em
-        unidade_1 = ton_M
-        unidade_2 = ton_k
+        unidade_1 = ton_k
+        unidade_2 = " ton"
 
     else:
 
@@ -1765,8 +1741,8 @@ def update_bar_single(ano_mem, form_sect, selecao, prim_fin, at, dd_select):
             forma_df = forma_df_pr
 
         else:
-            unidade_1 = ' GW'
-            unidade_2 = " " + 'MW'
+            unidade_1 = ' GWh'
+            unidade_2 = " " + 'MWh'
 
             sector_df = sector_df_fi
             forma_df = forma_df_fi
@@ -1801,11 +1777,16 @@ def update_bar_single(ano_mem, form_sect, selecao, prim_fin, at, dd_select):
             'Transportation': 'in',
                        }
         if at == "tab-emissoes":
-            title_1 = 'CO2 Emissions in the' + select + 'sector'
+            title_1 = 'CO2 Emissions in the ' + select + ' sector'
+
+            # if select == 'Doméstico':
+            #     title_1 = 'Emissões de CO2 no sector ' + select
+            # else:
+            #     title_1 = 'Emissões de CO2 ' + prep_select[select] + ' ' + select
 
         else:
             if select == 'Domestic':
-                title_1 = select + " consumption" " of Energy"
+                title_1 = select + " Energy consumption"
             else:
                 title_1 = "Energy consumption " + prep_select[select] + " " + select
 
@@ -1843,18 +1824,18 @@ def update_bar_single(ano_mem, form_sect, selecao, prim_fin, at, dd_select):
             if select == "Other":
                 title_1 = "CO2 Emissions in the other types of consumption"
         else:
-            title_1 = "Consumption of"
-            if select == "Outros":
-                title_1 = "Other types of Oonsumption"
+            title_1 = "Consumption of "
+            if select == "Other":
+                title_1 = "Other types of Consumption"
 
-        if select == "Outros":
+        if select == "Other":
             title = title_1 + ", per Sector, in " + str(ano)
         else:
             title = title_1 + " " + select + ", per Sector, in " + str(ano)
 
 
 
-        bg_color = color_7_dead_d[select]
+        bg_color = color_6_dead_d[select]
 
     df = df.loc[(df['Year'] == ano), [forma_sector, select, 'color_fill', 'color_line']]
 
@@ -1864,13 +1845,13 @@ def update_bar_single(ano_mem, form_sect, selecao, prim_fin, at, dd_select):
     df['percent'] = df[select]/(df[select].sum())*100
 
     if at == "tab-emissoes":
-        values = list(df[select]/1000000)
-        if int(round(df[select].sum() / 1000000, 0)) == 0:
-            valor_total = int(round(df[select].sum() / 1000, 0))
+        values = list(df[select]/1000)
+        if int(round(df[select].sum() / 1000, 0)) == 0:
+            valor_total = int(round(df[select].sum(), 0))
             unidade_vt = unidade_2
 
         else:
-            valor_total = int(round(df[select].sum() / 1000000, 0))
+            valor_total = int(round(df[select].sum() / 1000, 0))
             unidade_vt = unidade_1
 
     else:
@@ -1883,7 +1864,7 @@ def update_bar_single(ano_mem, form_sect, selecao, prim_fin, at, dd_select):
             valor_total = int(round(df[select].sum() / 1000, 0))
             unidade_vt = unidade_1
 
-
+    # round(forma_anual_pr['Total'] / 1000000, 1)
     unidades = [unidade_1] * len(values)
     for a in values:
         index_pos = values.index(a)
@@ -1891,9 +1872,11 @@ def update_bar_single(ano_mem, form_sect, selecao, prim_fin, at, dd_select):
             values[index_pos] = values[index_pos] * 1000
             unidades[index_pos] = unidade_2
 
-    my_text_hover = [fs + '<br>' + '{:.0f}'.format(sel) + un + '<br>' + '{:.2f}'.format(pr)
+    values_round = [int(v) if int(v) != 0 else round(v, 2) for v in values]
+
+    my_text_hover = [fs + '<br>' + str(sel) + un + '<br>' + '{:.2f}'.format(pr)
                      + '%' + '<br>Year: ' + '{}'.format(ano)
-                     for fs, sel,un, pr in zip(list(df[forma_sector]), values, unidades, list(df['percent']))]
+                     for fs, sel,un, pr in zip(list(df[forma_sector]), values_round, unidades, list(df['percent']))]
 
     my_text_show = ['{:.0f}'.format(pr) + '%' for pr in list(df['percent'])]
 
@@ -1940,8 +1923,8 @@ def update_ano_line(form_sect, prim_fin, at):
         forma_anual = forma_anual_em
         unidade = unidades_emissoes
         title_1 = "Anual CO2 Emissions, per "
-        unidade_1 = ton_M
-        unidade_2 = ton_k
+        unidade_1 = ton_k
+        unidade_2 = " ton"
 
     else:
 
@@ -1969,29 +1952,29 @@ def update_ano_line(form_sect, prim_fin, at):
         color_line = [color_5_live_d[x] for x in lista_index]
         color_fill = [color_5_dead_d[x] for x in lista_index]
         # my_text = ['Agricultura: ' + '{:.0f}'.format(agr) + '<br>Indústria: ' + '{:.0f}'.format(ind) +
-        #            '<br>Transportation: ' + '{:.0f}'.format(tran) + '<br>Serviços: ' + '{:.0f}'.format(serv)
+        #            '<br>Transportes: ' + '{:.0f}'.format(tran) + '<br>Serviços: ' + '{:.0f}'.format(serv)
         #            + '<br>Doméstico: ' + '{:.0f}'.format(dom) + '<br>' + '_' * 18 + '<br>' + '<br>TOTAL: ' + '{:.0f}'.format(
         #     agr + ind + tran + serv + dom)
         #            for agr, ind, tran, serv, dom in zip(list(df['Agricultura']), list(df['Indústria']),
-        #                                                    list(df['Transportation']), list(df['Serviços']),
+        #                                                    list(df['Transportes']), list(df['Serviços']),
         #                                                    list(df['Doméstico']))]
         title_2 = '{0} ({1})'.format(form_sect, unidade)
 
     else:
         df = forma_anual.iloc[:, :-1]
         lista_index = list(df.sum().sort_values().index)
-        color_line = [color_7_live_d[x] for x in lista_index]
-        color_fill = [color_7_dead_d[x] for x in lista_index]
-        # my_text = ['Diesel: ' + '{:.0f}'.format(ds) + '<br>Electricity: ' + '{:.0f}'.format(el) +
+        color_line = [color_6_live_d[x] for x in lista_index]
+        color_fill = [color_6_dead_d[x] for x in lista_index]
+        # my_text = ['Diesel: ' + '{:.0f}'.format(ds) + '<br>Electricidade: ' + '{:.0f}'.format(el) +
         #            '<br>Gás Natural: ' + '{:.0f}'.format(gn) + '<br>Gasolina: ' + '{:.0f}'.format(gl)
         #            + '<br>GPL: ' + '{:.0f}'.format(gpl) + '<br>Fuel: ' + '{:.0f}'.format(fu) + '<br>Outros: '
         #            + '{:.0f}'.format(out) + '<br>' + '_' * 18 + '<br>' + '<br>TOTAL: ' + '{:.0f}'.format(
         #     ds + el + gn + gl + gpl + fu + out)
-        #            for ds, el, gn, gl, gpl, fu, out in zip(list(df['Electricity']), list(df['Diesel']),
+        #            for ds, el, gn, gl, gpl, fu, out in zip(list(df['Electricidade']), list(df['Diesel']),
         #                                                    list(df['Gás Natural']), list(df['Gasolina']),
         #                                                    list(df['GPL']),
         #                                                    list(df['Fuel']), list(df['Outros']))]
-        title_2 = '{0} of Energy ({1})'.format(form_sect, unidade)
+        title_2 = '{0} ({1})'.format(form_sect, unidade)
 
 
     fig = go.Figure()
@@ -2085,14 +2068,14 @@ def update_ano_line(form_sect, prim_fin, at):
 #     else:
 #         df = forma_dom_anual.iloc[:, :-1]
 #         lista_index = list(df.sum().sort_values().index)
-#         color_line = [color_7_live_d[x] for x in lista_index]
-#         color_fill = [color_7_dead_d[x] for x in lista_index]
-#         # my_text = ['Diesel: ' + '{:.0f}'.format(ds) + '<br>Electricity: ' + '{:.0f}'.format(el) +
+#         color_line = [color_6_live_d[x] for x in lista_index]
+#         color_fill = [color_6_dead_d[x] for x in lista_index]
+#         # my_text = ['Diesel: ' + '{:.0f}'.format(ds) + '<br>Electricidade: ' + '{:.0f}'.format(el) +
 #         #            '<br>Gás Natural: ' + '{:.0f}'.format(gn) + '<br>Gasolina: ' + '{:.0f}'.format(gl)
 #         #            + '<br>GPL: ' + '{:.0f}'.format(gpl) + '<br>Fuel: ' + '{:.0f}'.format(fu) + '<br>Outros: '
 #         #            + '{:.0f}'.format(out) + '<br>' + '_' * 18 + '<br>' + '<br>TOTAL: ' + '{:.0f}'.format(
 #         #     ds + el + gn + gl + gpl + fu + out)
-#         #            for ds, el, gn, gl, gpl, fu, out in zip(list(df['Electricity']), list(df['Diesel']),
+#         #            for ds, el, gn, gl, gpl, fu, out in zip(list(df['Electricidade']), list(df['Diesel']),
 #         #                                                    list(df['Gás Natural']), list(df['Gasolina']),
 #         #                                                    list(df['GPL']),
 #         #                                                    list(df['Fuel']), list(df['Outros']))]
@@ -2142,4 +2125,5 @@ def update_ano_line(form_sect, prim_fin, at):
 #     return fig
 
 if __name__ == '__main__':
-    app.run_server(debug=True, port=3844)
+    app.run_server(debug=True)
+    # app.run_server(debug=True, port=5000)
