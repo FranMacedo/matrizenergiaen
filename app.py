@@ -279,8 +279,7 @@ app.scripts.config.serve_locally = True
 # app.server.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 # HEROKU
 app.server.config['SECRET_KEY'] = '60b69ea75d65bfc586c4e778a9357219'
-app.server.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://jedcrkiqvpgghw:a55d8ab5271e0b58a11aa3f350384741181a593f53d5c4da6ccbd4fd2db74737@ec2-54-246-100-246.eu-west-1.compute.amazonaws.com:5432/da5crrdk573292'
-
+app.server.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://ifjlbyuxowaqjf:5effd60ed1a219e7ed6a8e0e552f35629cf5cdce9fc23962ecc5e3f67576aeb4@ec2-54-246-89-234.eu-west-1.compute.amazonaws.com:5432/d1ddrskt434lql'
 app.server.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app.server)
