@@ -419,7 +419,7 @@ CONTENT_STYLE_2 = {
 # id_d = ['download-p', 'download-f', 'download-em']
 # id_r = ['radio-p', 'radio-f', 'radio-em']
 # id_t = ['target-p', 'target-f', 'target-em']
-# links = ['/download/Energia_Primaria_Lisboa.xlsx', '/download/Energia_Final_Lisboa.xlsx', '/download/Emissoes_CO2_Lisboa.xlsx']
+# links = ['/download/Primary_Energy_Lisbon.xlsx', '/download/Final_Energy_Lisbon.xlsx', '/download/CO2_Emissions_Lisbon.xlsx']
 # divs = ['hidden-p', 'hidden-f', 'hidden-em']
 #
 # ids_modal = {nom : {
@@ -450,13 +450,13 @@ CONTENT_STYLE_2 = {
 #         [
 #             dbc.Modal(
 #                 [
-#                     dbc.ModalHeader("DOWNLOAD DE FICHEIROS - {}".format(header)),
-#                     dbc.ModalBody(["Qual o propósito deste download?",
+#                     dbc.ModalHeader("DOWNLOAD - {}".format(header)),
+#                     dbc.ModalBody(["What's the purpose of this download??",
 #                                    dcc.RadioItems(
 #                                        options=[
-#                                            {"label": "Pessoal", "value": 1},
-#                                            {"label": "Profissional", "value": 2},
-#                                            {"label": "Académico", "value": 3},
+#                                            {"label": "Personal", "value": 1},
+#                                            {"label": "Professional", "value": 2},
+#                                            {"label": "Academic", "value": 3},
 #                                        ],
 #                                        # value=1,
 #                                        id=id_r,
@@ -1252,7 +1252,7 @@ def regista_pessoas(nd, letra, num):
 @server.route("/download/<path:path>")
 def download(path):
     """Serve a file from the upload directory."""
-    return send_from_directory("data", path, as_attachment=True)
+    return send_from_directory("data/en", path, as_attachment=True)
 
 #
 # @app.callback(
