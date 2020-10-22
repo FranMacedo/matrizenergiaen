@@ -9,7 +9,7 @@ Dash Application on Energy Consumption and Energy Balance in Lisbon
 ## SETUP
 
 ```
-git clone https://github.com/FranMacedo/matrizagua.git
+git clone https://github.com/FranMacedo/matrizenergiaen.git
 cd matrizagua
 python -m venv venv
 .\venv\scripts\activate
